@@ -20,5 +20,5 @@ Start by aquiring the repository. For example: `git clone https://github.com/6Kw
 To start the script with default parameters, use `py main.py <-f/--frame_rate _number_> <-b/--batch_size _number_>`. Once the stream outlet is running, use LabRecorder and add the outlet to the stream inlet.
 ### Parameters
 If no parameter is given, will use default instead
-* __-f__/__--frame_rate__ --> Followed by a number (float or int) this will be the sample rate that the script uses. _Default: 60_
+* __-f__/__--frame_rate__ --> Followed by a number (float or int) this will be the sample rate that the script uses in Hz. _Default: 60_
 * __-b__/__--batch_size__ --> Should be followed by an integer that will represent the bulk size of each LabStreamingLayer package. If set to 1, will use sample-wise package sending. _Default: 1_  __Warning:__ Bulk-wise package sending is untested
