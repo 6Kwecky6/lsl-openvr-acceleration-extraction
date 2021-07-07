@@ -1,6 +1,6 @@
 lsl-openvr-acceleration-extraction
 =================================
-This project was created to function asa stremi outlet for LabStreamingLayers to send head mounted device accelerations to a LabStreamingLayer Stream Inlet.
+This project was created to function as a streaming outlet for LabStreamingLayers to send head mounted device accelerations to a LabStreamingLayer Stream Inlet.
 
 ***
 Dependencies
@@ -17,7 +17,11 @@ How to use
 ---------------------------------
 Start by aquiring the repository. For example: `git clone https://github.com/6Kwecky6/lsl-openvr-acceleration-extraction.git`, then in terminal move into the project folder: `cd <project folder>/lsl-openvr-acceleration-extraction/`.
 
-To start the script with default parameters, use `py main.py <-f/--frame_rate _number_> <-b/--batch_size _number_>`. Once the stream outlet is running, use LabRecorder and add the outlet to the stream inlet.
+To start the script with default parameters, use `py main.py <-f/--frame_rate _number_> <-b/--batch_size _number_>`. Once the stream outlet is running, use LabRecorder and add the outlet to the stream inlet. The outlet outputs 6 channels per sample:
+
+[<Linear_acceleration_x>, <Linear_acceleration_y>, <Linear_acceleration_z>,<angular_acceleration_x>, <angular_acceleration_y>, <angular_acceleration_z>]
+
+***
 ### Parameters
 If no parameter is given, will use default instead
 * __-f__/__--frame_rate__ --> Followed by a number (float or int) this will be the sample rate that the script uses in Hz. _Default: 60_
