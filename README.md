@@ -21,6 +21,8 @@ To start the script with default parameters, use `py main.py <-f/--frame_rate _n
 
 [<Linear_acceleration_x>, <Linear_acceleration_y>, <Linear_acceleration_z>,<angular_acceleration_x>, <angular_acceleration_y>, <angular_acceleration_z>]
 
+When you are done recording the VR acceleration, press CTRL+C to kill hte stream outlet.
+
 ***
 ### Parameters
 If no parameter is given, will use default instead
