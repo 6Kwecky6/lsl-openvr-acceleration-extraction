@@ -65,7 +65,8 @@ def start_vr(queue, is_running, framerate=60.):  # defaults at 120 frames per se
             sample_times = np.array(sample_times)
             mean = sample_times.mean()
             sd = sample_times.std()
-            print('Mean sample rate: {} Standard deviation: {}'.format(mean, sd))
+            print('Mean sample rate: {:e} ({:e}sek diff from given frame rate) Standard deviation: {:e}'.
+                  format(mean, mean-frame_duration, sd))
 
     print('Ended openvr extraction')
 
@@ -157,3 +158,4 @@ if __name__ == '__main__':
         isRunning.value = False
         process.join(1)
         openvr.shutdown()
+        print('Process ended')
