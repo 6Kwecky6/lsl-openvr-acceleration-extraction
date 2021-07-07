@@ -6,7 +6,6 @@ import psutil
 import getopt
 
 import pylsl as lsl
-import numpy as np
 
 LINEAR_ACCELERATION_X = 0
 LINEAR_ACCELERATION_Y = 1
