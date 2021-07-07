@@ -21,12 +21,15 @@ channel_count = 6
 def start_vr(queue, is_running, framerate=60.):  # defaults at 120 frames per second
     openvr.init(openvr.VRApplication_Background)
     pose = []
-    start = time.time()
+    cur_time = time.time()
+    start = cur_time
+    sample_times = []
+    is_sampling = True
     while is_running.value:
         prev_pose = pose
         frame_duration = 1./framerate
-        prev_time = start
-        start = time.time()
+        prev_time = cur_time
+        cur_time = time.time()
         pose = openvr.VRSystem().getDeviceToAbsoluteTrackingPose(
             origin=openvr.TrackingUniverseStanding,
             predictedSecondsToPhotonsFromNow=0,
@@ -37,9 +40,12 @@ def start_vr(queue, is_running, framerate=60.):  # defaults at 120 frames per se
             time.sleep(frame_duration)
             continue
         pre_list = time.time()
-        acceleration = [(ai - bi)/(start - prev_time) for ai, bi in zip(prev_pose.vVelocity, pose.vVelocity)]
+        delta_time = cur_time-prev_time
+        if is_sampling:
+            sample_times.append(delta_time)
+        acceleration = [(ai - bi)/delta_time for ai, bi in zip(prev_pose.vVelocity, pose.vVelocity)]
         acceleration_angular = [
-            (ai - bi)*(start - prev_time)
+            (ai - bi)/delta_time
             for ai, bi in
             zip(prev_pose.vAngularVelocity, pose.vAngularVelocity)
         ]
@@ -54,6 +60,13 @@ def start_vr(queue, is_running, framerate=60.):  # defaults at 120 frames per se
         # print('acceleration: {} angular acceleration: {}'.format(print_list(acceleration),
         #                                                          print_list(acceleration_angular)))
         queue.put((acceleration, acceleration_angular),)
+        if time.time()-start >= 10 and is_sampling:
+            is_sampling = False
+            sample_times = np.array(sample_times)
+            mean = sample_times.mean()
+            sd = sample_times.std()
+            print('Mean sample rate: {} Standard deviation: {}'.format(mean, sd))
+
     print('Ended openvr extraction')
 
 
